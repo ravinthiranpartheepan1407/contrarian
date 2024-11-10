@@ -46,7 +46,7 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/analyze`, formData, {
+        const response = await axios.post('https://contrarian-ventures-bk-ravinthiranpartheepan1407s-projects.vercel.app/api/analyze', formData, {
             headers: { 
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*'
