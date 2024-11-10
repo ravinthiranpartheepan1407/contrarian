@@ -46,7 +46,7 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-        const response = await axios.post('https://contrarian-ventures-bk.vercel.app/api/analyze', formData, {
+        const response = await axios.post('https://contrarian-ventures-n8rcceg7f.vercel.app/api/analyze', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         });
 
