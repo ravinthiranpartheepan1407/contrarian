@@ -45,7 +45,7 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-      const response = await fetch(`${process.env.url}/api/analyze`, {
+      const response = await fetch('https://arkhammapi.com/api/analyze', {
         method: 'POST',
         body: formData,
       });
