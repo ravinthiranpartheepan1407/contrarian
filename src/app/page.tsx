@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Upload } from 'lucide-react';
 import Image from 'next/image';
+import axios from 'axios';
 
 interface ScoreDetail {
   score: number;
@@ -45,22 +46,16 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://contrarian-ventures-bk.vercel.app/api/analyze', {
-        method: 'POST',
-        body: formData,
-      });
+        const response = await axios.post('https://contrarian-ventures-bk.vercel.app/api/analyze', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
 
-      if (!response.ok) {
-        throw new Error('Analysis failed');
-      }
-
-      const result = await response.json();
-      setAnalysis(result);
+        setAnalysis(response.data);
     } catch (err) {
-      setError('Failed to analyze pitch deck. Please try again.');
-      console.error(err);
+        setError('Failed to analyze pitch deck. Please try again.');
+        console.error(err);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
