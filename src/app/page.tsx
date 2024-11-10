@@ -46,7 +46,7 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-        const response = await axios.post('https://contrarian-ventu-git-5e4835-ravinthiranpartheepan1407s-projects.vercel.app/api/analyze', formData, {
+        const response = await axios.post('https://dynamic-maggie-sandbox-contrarian-7fe1f3ad.koyeb.app/api/analyze', formData, {
             headers: { 
                 'Content-Type': 'multipart/form-data',
                 'Access-Control-Allow-Origin': '*'
