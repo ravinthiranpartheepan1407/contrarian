@@ -1,12 +1,13 @@
 import webpack from 'webpack';
 import dotenv from 'dotenv';
+import { NextConfig } from 'next';
 
 // Load environment variables
 dotenv.config();
 
-const nextConfig = {
+const nextConfig: NextConfig = {
     reactStrictMode: true,
-    webpack(config, { isServer }) {
+    webpack(config, { isServer }: { isServer: boolean }) {
         // This allows you to use your environment variables in both the client and server
         config.plugins.push(
             new webpack.EnvironmentPlugin(process.env)
