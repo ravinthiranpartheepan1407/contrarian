@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Upload } from 'lucide-react';
 import Image from 'next/image';
-import axios from 'axios';
 
 interface ScoreDetail {
   score: number;
@@ -35,8 +34,8 @@ export default function Home() {
 
   const handleUpload = async () => {
     if (!file) {
-        setError('Please select a file first');
-        return;
+      setError('Please select a file first');
+      return;
     }
 
     setLoading(true);
@@ -46,22 +45,24 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-        const response = await axios.post('https://arkhammapi.com/api/analyze', formData, {
-            headers: { 
-                'Content-Type': 'multipart/form-data',
-                'Access-Control-Allow-Origin': '*'
-            },
-            withCredentials: false
-        });
+      const response = await fetch(`${process.env.url}/api/analyze`, {
+        method: 'POST',
+        body: formData,
+      });
 
-        setAnalysis(response.data);
+      if (!response.ok) {
+        throw new Error('Analysis failed');
+      }
+
+      const result = await response.json();
+      setAnalysis(result);
     } catch (err) {
-        setError('Failed to analyze pitch deck. Please try again.');
-        console.error(err);
+      setError('Failed to analyze pitch deck. Please try again.');
+      console.error(err);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
   const renderScoreCard = (title: string, scores: Record<string, ScoreDetail>) => {
     return (
