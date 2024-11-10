@@ -35,8 +35,8 @@ export default function Home() {
 
   const handleUpload = async () => {
     if (!file) {
-      setError('Please select a file first');
-      return;
+        setError('Please select a file first');
+        return;
     }
 
     setLoading(true);
@@ -46,8 +46,12 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-        const response = await axios.post('https://contrarian-ventures-bk.vercel.app/api/analyze', formData, {
-            headers: { 'Content-Type': 'multipart/form-data' },
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/analyze`, formData, {
+            headers: { 
+                'Content-Type': 'multipart/form-data',
+                'Access-Control-Allow-Origin': '*'
+            },
+            withCredentials: false
         });
 
         setAnalysis(response.data);
@@ -57,7 +61,7 @@ export default function Home() {
     } finally {
         setLoading(false);
     }
-  };
+};
 
   const renderScoreCard = (title: string, scores: Record<string, ScoreDetail>) => {
     return (
