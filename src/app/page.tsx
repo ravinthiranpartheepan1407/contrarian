@@ -45,7 +45,7 @@ export default function Home() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://contrarian-ventures-bk.vercel.app/analyze', {
+      const response = await fetch('https://contrarian-ventures-bk.vercel.app/api/analyze', {
         method: 'POST',
         body: formData,
       });
