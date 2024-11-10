@@ -1,11 +1,28 @@
 'use client'
 import { useState } from 'react';
 import { Upload } from 'lucide-react';
+import Image from 'next/image';
+
+interface ScoreDetail {
+  score: number;
+  rationale: string;
+}
+
+interface AnalysisData {
+  summary: string;
+  geography: string;
+  industry: string;
+  stage: string;
+  total_score: number;
+  team_score: Record<string, ScoreDetail>;
+  business_model_score: Record<string, ScoreDetail>;
+  traction_score: Record<string, ScoreDetail>;
+}
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [analysis, setAnalysis] = useState<any>(null);
+  const [analysis, setAnalysis] = useState<AnalysisData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,11 +64,11 @@ export default function Home() {
     }
   };
 
-  const renderScoreCard = (title: string, scores: any) => {
+  const renderScoreCard = (title: string, scores: Record<string, ScoreDetail>) => {
     return (
       <div className="bg-gradient-to-r from-blue-700 via-purple-700 to-purple-600 bg-opacity-80 rounded-lg shadow-lg p-6 mb-4">
         <h3 className="text-2xl font-semibold text-white mb-4">{title}</h3>
-        {Object.entries(scores).map(([key, value]: [string, any]) => (
+        {Object.entries(scores).map(([key, value]) => (
           <div key={key} className="mb-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-gray-400 capitalize">
@@ -108,17 +125,18 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right Side - Image Display */}
         <div className="flex-1 shrink-0 relative overflow-hidden">
-          <img
+          <Image
             src="/unicorn.jpg"
             alt="Analyzer Banner"
-            className="object-cover w-full h-full brightness-75 hover:scale-105 transition-transform duration-500"
+            layout="fill"
+            objectFit="cover"
+            className="brightness-75 hover:scale-105 transition-transform duration-500"
           />
         </div>
       </div>
 
-      {/* Analysis Results */}
+
       {analysis && (
         <div className="mt-12 p-8 rounded-lg shadow-lg mx-10 lg:mx-20">
           <h2 className="text-4xl font-bold text-purple-400 mb-6 text-center">Evaluation</h2>
